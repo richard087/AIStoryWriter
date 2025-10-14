@@ -114,6 +114,20 @@ class Interface:
                         api_key=os.environ["OPENROUTER_API_KEY"], model=ProviderModel
                     )
 
+                elif Provider == "zai":
+                    if (
+                        not "ZHIPU_API_KEY" in os.environ
+                        or os.environ["ZHIPU_API_KEY"] == ""
+                    ):
+                        raise Exception(
+                            "ZHIPU_API_KEY not found in environment variables"
+                        )
+                    from Writer.Interface.ZAI import GLM
+
+                    self.Clients[Model] = GLM(
+                        api_key=os.environ["ZHIPU_API_KEY"], model=ProviderModel
+                    )
+
                 elif Provider == "Anthropic":
                     raise NotImplementedError("Anthropic API not supported")
 
@@ -378,6 +392,23 @@ class Interface:
             Client.set_params(**ModelOptions)
             Client.model = ProviderModel
             print(ProviderModel)
+
+            Response = Client.chat(messages=_Messages, seed=Seed)
+            _Messages.append({"role": "assistant", "content": Response})
+
+        elif Provider == "zai":
+
+            # https://open.bigmodel.cn/dev/api#parameter
+            ValidParameters = [
+                "max_tokens",
+                "temperature",
+                "top_p",
+            ]
+            ModelOptions = ModelOptions if ModelOptions is not None else {}
+
+            Client = self.Clients[_Model]
+            Client.set_params(**ModelOptions)
+            Client.model = ProviderModel
 
             Response = Client.chat(messages=_Messages, seed=Seed)
             _Messages.append({"role": "assistant", "content": Response})
