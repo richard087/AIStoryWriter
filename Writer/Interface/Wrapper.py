@@ -9,7 +9,7 @@ import importlib
 import subprocess
 import sys
 import re
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse, unquote
 
 dotenv.load_dotenv()
 
@@ -502,6 +502,7 @@ class Interface:
             else:
                 Model = parsed.netloc
                 Host = None
+            Model = unquote(Model)
             QueryParams = parse_qs(parsed.query)
 
             # Flatten QueryParams
