@@ -18,6 +18,8 @@ Generate full-length novels with AI! Harness the power of large language models 
 
 ## 🏁 Quick Start
 
+### From Repository
+
 Getting started with AI Story Generator is easy:
 
 1. Clone the repository
@@ -25,15 +27,38 @@ Getting started with AI Story Generator is easy:
 3. Run the generator:
 
 ```sh
-./Write.py -Prompt Prompts/YourChosenPrompt.txt
+./Write.py -Prompt ExamplePrompts/Example1/Prompt.txt
 ```
 
 That's it! The system will automatically download any required models and start generating your story.
 
-**Optional steps:**
+### As an Installed Library
 
-- Modify prompts in `Writer/Prompts.py` or create your own
-- Configure the model selection in `Writer/Config.py`
+AIStoryWriter is now available as an installable Python library:
+
+```bash
+# Install from repository in editable mode
+pip install -e .
+
+# Or after installation, use the CLI command
+aistorywriter-write -Prompt ExamplePrompts/Example1/Prompt.txt
+```
+
+**Use AIStoryWriter in Your Code:**
+
+```python
+from aistorywriter.writer import Statistics, PrintUtils, Config
+
+# Configure models
+Config.SEED = 42
+Config.INITIAL_OUTLINE_WRITER_MODEL = "google://gemini-1.5-pro"
+
+# Use the library
+logger = PrintUtils.Logger()
+word_count = Statistics.GetWordCount("Your text here")
+```
+
+For detailed library usage information, see [LIBRARY_USAGE.md](LIBRARY_USAGE.md).
 
 ## 💻 Hardware Recommendations
 
