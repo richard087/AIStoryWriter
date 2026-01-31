@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aistorywriter"
+version = "0.1.0"
+description = "Generate full-length novels with AI using language models"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "AGPL-3.0"}
+authors = [
+    {name = "AIStoryWriter Contributors"}
+]
+keywords = [
+    "ai",
+    "story",
+    "generation",
+    "creative-writing",
+    "language-models",
+    "llm",
+    "novel",
+    "fiction"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia",
+    "Topic :: Artistic Software",
+]
+
+dependencies = [
+    "ollama>=0.0.1",
+    "termcolor>=1.1.0",
+    "google-generativeai>=0.3.0",
+    "python-dotenv>=0.19.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/datacrystals/AIStoryWriter"
+Repository = "https://github.com/datacrystals/AIStoryWriter.git"
+Documentation = "https://github.com/datacrystals/AIStoryWriter/blob/main/README.md"
+Issues = "https://github.com/datacrystals/AIStoryWriter/issues"
+
+[project.scripts]
+aistorywriter = "aistorywriter.cli:main"
+aistorywriter-write = "aistorywriter.cli:main_write"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["aistorywriter*"]
+
+[tool.setuptools.package-data]
+aistorywriter = [
+    "py.typed",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+select = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["src/aistorywriter"]
+omit = [
+    "*/tests/*",
+    "*/site-packages/*",
+]
